@@ -36,8 +36,5 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get install -yqq --force-yes \
 # Install postgresql client 9.3
 RUN DEBIAN_FRONTEND=noninteractive apt-get install -yqq postgresql-client-9.3
 
-# Install ruby 2.1
-RUN DEBIAN_FRONTEND=noninteractive apt-get install -yqq ruby2.1 ruby2.1-dev
-
 # Install bundler
 RUN gem install --no-ri --no-rdoc bundler
