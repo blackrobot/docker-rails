@@ -1,4 +1,4 @@
-# namely/rails
+# damon/rails
 #
 # This installs some common dependencies of Ruby gems, and Rails.
 
