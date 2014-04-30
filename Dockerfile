@@ -2,16 +2,21 @@
 #
 # This installs some common dependencies of Ruby gems, and Rails.
 
-FROM damon/base
+FROM damon/ruby
+
+# Add nodejs repository
+RUN add-apt-repository -y ppa:chris-lea/node.js
 
 # Add the postgresql repository for the latest client
 RUN echo "deb http://apt.postgresql.org/pub/repos/apt/ precise-pgdg main" >> /etc/apt/sources.list
-RUN curl https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add - && \
-    apt-get update -qq
+RUN curl https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add -
+
+# Update the sources with our new repositories
+RUN apt-get update -qq
 
 # Install the rails dependencies
-RUN DEBIAN_FRONTEND=noninteractive apt-get install -yqq --force-yes \
-    autoconf \
+RUN DEBIAN_FRONTEND=noninteractive apt-get install -yqq \
+    gawk \
     imagemagick \
     libcurl4-openssl-dev \
     libevent-dev \
@@ -23,18 +28,12 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get install -yqq --force-yes \
     libmagickcore-dev \
     libmagickwand-dev \
     libpq-dev \
-    libssl-dev \
     libssl1.0.0 \
     libxml2-dev \
-    libxslt-dev \
-    nodejs \
-    zlib1g-dev \
-    gawk \
-    libreadline6-dev \
-    libyaml-dev
+    libxslt-dev
+
+# Install nodejs
+RUN DEBIAN_FRONTEND=noninteractive apt-get install -yqq nodejs
 
 # Install postgresql client 9.3
 RUN DEBIAN_FRONTEND=noninteractive apt-get install -yqq postgresql-client-9.3
-
-# Install bundler
-RUN gem install --no-ri --no-rdoc bundler
